@@ -1,0 +1,65 @@
+{
+  "enabled": true,
+  "lastScan": {
+    "id": "incident_1779444903915",
+    "timestamp": "2026-05-22T10:15:03.915Z",
+    "eventData": {
+      "eventType": "unauthorized_access",
+      "details": "failed login from suspicious IP 102.23.45.67"
+    },
+    "analysis": {
+      "threatDetected": true,
+      "severity": "critical",
+      "riskScore": 75,
+      "explanation": "Detected AI threat indicators: failed login, unauthorized, suspicious.",
+      "model": "ai-driven-threat-detector-v1"
+    }
+  },
+  "incidents": [
+    {
+      "id": "incident_1779444903915",
+      "timestamp": "2026-05-22T10:15:03.915Z",
+      "eventData": {
+        "eventType": "unauthorized_access",
+        "details": "failed login from suspicious IP 102.23.45.67"
+      },
+      "analysis": {
+        "threatDetected": true,
+        "severity": "critical",
+        "riskScore": 75,
+        "explanation": "Detected AI threat indicators: failed login, unauthorized, suspicious.",
+        "model": "ai-driven-threat-detector-v1"
+      }
+    },
+    {
+      "id": "incident_1779441553364",
+      "timestamp": "2026-05-22T09:19:13.364Z",
+      "eventData": {
+        "eventType": "unauthorized_access",
+        "details": "failed login from suspicious IP 102.23.45.67"
+      },
+      "analysis": {
+        "threatDetected": true,
+        "severity": "critical",
+        "riskScore": 75,
+        "explanation": "Detected AI threat indicators: failed login, unauthorized, suspicious.",
+        "model": "ai-driven-threat-detector-v1"
+      }
+    },
+    {
+      "id": "incident_1779440629246",
+      "timestamp": "2026-05-22T09:03:49.246Z",
+      "eventData": {
+        "eventType": "unauthorized_access",
+        "details": "failed login from suspicious IP 102.23.45.67"
+      },
+      "analysis": {
+        "threatDetected": true,
+        "severity": "critical",
+        "riskScore": 75,
+        "explanation": "Detected AI threat indicators: failed login, unauthorized, suspicious.",
+        "model": "ai-driven-threat-detector-v1"
+      }
+    }
+  ]
+}

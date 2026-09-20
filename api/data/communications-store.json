@@ -1,0 +1,61 @@
+{
+  "ussdSessions": {
+    "sess1": {
+      "sessionId": "sess1",
+      "phoneNumber": "+255745759185",
+      "step": 0,
+      "answers": []
+    },
+    "s": {
+      "sessionId": "s",
+      "phoneNumber": "+255745759185",
+      "step": 0,
+      "answers": []
+    },
+    "test-session": {
+      "sessionId": "test-session",
+      "phoneNumber": "+255745759185",
+      "step": 0,
+      "answers": []
+    }
+  },
+  "users": [
+    {
+      "id": "usr_1779440491542",
+      "email": "test@example.com",
+      "phone": "+255745759185",
+      "name": "Test Farmer",
+      "role": "farmer",
+      "deviceType": "smartphone",
+      "verified": true,
+      "createdAt": "2026-05-22T09:01:31.542Z",
+      "updatedAt": "2026-05-22T10:15:03.898Z"
+    }
+  ],
+  "events": [
+    {
+      "id": "evt_1779444903898",
+      "type": "google_login",
+      "timestamp": "2026-05-22T10:15:03.898Z",
+      "email": "test@example.com",
+      "phone": "+255745759185",
+      "name": "Test Farmer"
+    },
+    {
+      "id": "evt_1779441553344",
+      "type": "google_login",
+      "timestamp": "2026-05-22T09:19:13.344Z",
+      "email": "test@example.com",
+      "phone": "+255745759185",
+      "name": "Test Farmer"
+    },
+    {
+      "id": "evt_1779440491542",
+      "type": "google_login",
+      "timestamp": "2026-05-22T09:01:31.542Z",
+      "email": "test@example.com",
+      "phone": "+255745759185",
+      "name": "Test Farmer"
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+name: Generate OpenAPI stubs
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'api/openapi.yaml'
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+
+      - name: Run OpenAPI Generator (Node server + TS client)
+        env:
+          ROOT: ${{ github.workspace }}
+        run: |
+          set -e
+          docker run --rm -v "${ROOT}":/local openapitools/openapi-generator-cli generate \
+            -i /local/api/openapi.yaml -g nodejs-express-server -o /local/generated/server/nodejs-express || exit 1
+          docker run --rm -v "${ROOT}":/local openapitools/openapi-generator-cli generate \
+            -i /local/api/openapi.yaml -g typescript-axios -o /local/generated/client/ts-axios || exit 1
+
+      - name: Commit generated code
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add generated || true
+          if git diff --staged --quiet; then
+            echo "No changes to generated stubs"
+          else
+            git commit -m "chore: regenerate OpenAPI stubs" || true
+            git push origin HEAD:${{ github.ref_name }}
+          fi

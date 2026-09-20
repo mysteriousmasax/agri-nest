@@ -1,0 +1,36 @@
+version: '3.8'
+services:
+  api:
+    build: ../api
+    ports:
+      - "3000:3000"
+    environment:
+      PG_HOST: postgres
+      PG_PORT: 5432
+      PG_USER: agri
+      PG_PASSWORD: agri
+      PG_DATABASE: agri
+    depends_on:
+      - postgres
+      - redis
+      - rabbitmq
+
+  postgres:
+    image: postgis/postgis:14-3.4
+    environment:
+      POSTGRES_USER: agri
+      POSTGRES_PASSWORD: agri
+      POSTGRES_DB: agri
+    ports:
+      - "5432:5432"
+
+  redis:
+    image: redis:7
+    ports:
+      - "6379:6379"
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"

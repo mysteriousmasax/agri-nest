@@ -1,0 +1,21 @@
+openapi: 3.0.3
+info:
+  title: AGRI-NEST Jicho API
+  version: 0.1.0
+paths:
+  /jicho/scan:
+    post:
+      summary: Submit image for diagnosis
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '../openapi.yaml#/components/schemas/JichoScanRequest'
+      responses:
+        '200':
+          description: Diagnosis
+          content:
+            application/json:
+              schema:
+                $ref: '../openapi.yaml#/components/schemas/JichoScanResponse'

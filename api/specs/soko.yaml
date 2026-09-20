@@ -1,0 +1,22 @@
+openapi: 3.0.3
+info:
+  title: AGRI-NEST Soko API
+  version: 0.1.0
+paths:
+  /soko/listings:
+    post:
+      summary: Create listing
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '../openapi.yaml#/components/schemas/ListingCreate'
+      responses:
+        '201':
+          description: Created
+    get:
+      summary: List items
+      responses:
+        '200':
+          description: OK

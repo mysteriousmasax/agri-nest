@@ -1,0 +1,30 @@
+openapi: 3.0.3
+info:
+  title: AGRI-NEST Farms API
+  version: 0.1.0
+paths:
+  /farms:
+    post:
+      summary: Create a farm
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '../openapi.yaml#/components/schemas/FarmCreate'
+      responses:
+        '201':
+          description: Created
+
+  /farms/{farmId}:
+    get:
+      summary: Get farm by ID
+      parameters:
+        - in: path
+          name: farmId
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK

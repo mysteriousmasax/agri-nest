@@ -1,0 +1,493 @@
+openapi: 3.0.3
+info:
+  title: AGRI-NEST Core API
+  version: "0.1.0"
+  description: Core service API contracts (auth, farms, jicho, marketplace)
+servers:
+  - url: http://localhost:3000
+paths:
+  /auth/register:
+    post:
+      summary: Register a new user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserCreate'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+
+  /auth/login:
+    post:
+      summary: Login (returns token)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthRequest'
+      responses:
+        '200':
+          description: Auth response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+
+  /communications/ussd:
+    post:
+      summary: Handle incoming USSD session events
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UssdSessionRequest'
+      responses:
+        '200':
+          description: USSD session response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UssdSessionResponse'
+
+  /communications/sms/send:
+    post:
+      summary: Send an SMS message via the communications gateway
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SmsRequest'
+      responses:
+        '200':
+          description: SMS send result
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResult'
+
+  /communications/voice/call:
+    post:
+      summary: Place a voice call through the communications provider
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VoiceCallRequest'
+      responses:
+        '200':
+          description: Voice call result
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResult'
+
+  /communications/airtime/topup:
+    post:
+      summary: Top up airtime for a farmer mobile number
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AirtimeTopupRequest'
+      responses:
+        '200':
+          description: Airtime topup result
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResult'
+
+  /communications/google/login:
+    post:
+      summary: Sign in via Google and link to a farmer profile
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GoogleLoginRequest'
+      responses:
+        '200':
+          description: Google login result
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  token:
+                    type: string
+                  user:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      phone:
+                        type: string
+                      email:
+                        type: string
+                      name:
+                        type: string
+
+  /security/scan:
+    post:
+      summary: Analyze an event with AI cyber threat detection
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SecurityScanRequest'
+      responses:
+        '200':
+          description: Threat analysis result
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SecurityScanResponse'
+
+  /security/configure:
+    post:
+      summary: Enable or disable cyber threat detection for super admin
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SecurityConfigureRequest'
+      responses:
+        '200':
+          description: Configuration result
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResult'
+
+  /security/status:
+    post:
+      summary: Get cyber threat detection status for super admin
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SecurityStatusRequest'
+      responses:
+        '200':
+          description: Status response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  enabled:
+                    type: boolean
+                  lastScan:
+                    type: object
+                  incidentCount:
+                    type: integer
+
+  /users:
+    post:
+      summary: Create user (minimal)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserCreate'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+
+  /farms:
+    post:
+      summary: Create a farm
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FarmCreate'
+      responses:
+        '201':
+          description: Farm created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Farm'
+
+  /farms/{farmId}:
+    get:
+      summary: Get farm by ID
+      parameters:
+        - in: path
+          name: farmId
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Farm
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Farm'
+
+  /fields:
+    post:
+      summary: Add a field to a farm
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FieldCreate'
+      responses:
+        '201':
+          description: Field created
+
+  /jicho/scan:
+    post:
+      summary: Submit an image for Jicho diagnosis
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/JichoScanRequest'
+      responses:
+        '200':
+          description: Diagnosis result
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JichoScanResponse'
+
+  /soko/listings:
+    post:
+      summary: Create a marketplace listing
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ListingCreate'
+      responses:
+        '201':
+          description: Listing created
+    get:
+      summary: List marketplace items (paginated)
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+            default: 1
+      responses:
+        '200':
+          description: Listings
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  items:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Listing'
+
+components:
+  schemas:
+    AuthRequest:
+      type: object
+      properties:
+        phone:
+          type: string
+        password:
+          type: string
+
+    UserCreate:
+      type: object
+      required: [phone]
+      properties:
+        phone: { type: string }
+        name: { type: string }
+
+    User:
+      type: object
+      properties:
+        user_id: { type: string }
+        phone: { type: string }
+        name: { type: string }
+
+    FarmCreate:
+      type: object
+      required: [user_id, name]
+      properties:
+        user_id: { type: string }
+        name: { type: string }
+        soil_type: { type: string }
+        total_acres: { type: number }
+
+    Farm:
+      type: object
+      properties:
+        farm_id: { type: string }
+        user_id: { type: string }
+        name: { type: string }
+
+    FieldCreate:
+      type: object
+      required: [farm_id, name, field_boundary]
+      properties:
+        farm_id: { type: string }
+        name: { type: string }
+        crop: { type: string }
+        field_boundary: { type: string, description: 'GeoJSON polygon' }
+
+    JichoScanRequest:
+      type: object
+      required: [farmer_id, image_base64]
+      properties:
+        farmer_id: { type: string }
+        image_base64: { type: string }
+        gps:
+          type: object
+          properties:
+            lat: { type: number }
+            lon: { type: number }
+
+    JichoScanResponse:
+      type: object
+      properties:
+        diagnosis: { type: string }
+        confidence: { type: number }
+        recommended_treatment: { type: string }
+
+    ListingCreate:
+      type: object
+      required: [farmer_id, crop_type, quantity]
+      properties:
+        farmer_id: { type: string }
+        crop_type: { type: string }
+        quantity: { type: number }
+        price: { type: number }
+
+    Listing:
+      type: object
+      properties:
+        listing_id: { type: string }
+        farmer_id: { type: string }
+        crop_type: { type: string }
+        quantity: { type: number }
+        price: { type: number }
+
+    UssdSessionRequest:
+      type: object
+      required: [sessionId, phoneNumber]
+      properties:
+        sessionId: { type: string }
+        phoneNumber: { type: string }
+        text: { type: string }
+
+    UssdSessionResponse:
+      type: object
+      properties:
+        message: { type: string }
+        endSession: { type: boolean }
+
+    SmsRequest:
+      type: object
+      required: [phoneNumber, message]
+      properties:
+        phoneNumber: { type: string }
+        message: { type: string }
+
+    VoiceCallRequest:
+      type: object
+      required: [phoneNumber, voiceMessage]
+      properties:
+        phoneNumber: { type: string }
+        voiceMessage: { type: string }
+
+    AirtimeTopupRequest:
+      type: object
+      required: [phoneNumber, amount]
+      properties:
+        phoneNumber: { type: string }
+        amount: { type: number }
+
+    GoogleLoginRequest:
+      type: object
+      required: [email]
+      properties:
+        idToken: { type: string }
+        email: { type: string }
+        name: { type: string }
+        phone: { type: string }
+
+    GenericResult:
+      type: object
+      properties:
+        success: { type: boolean }
+        response: { type: object }
+        error: { type: string }
+        reason: { type: string }
+
+    SecurityScanRequest:
+      type: object
+      required: [eventType]
+      properties:
+        eventType: { type: string }
+        details: { type: string }
+        source: { type: string }
+
+    SecurityScanResponse:
+      type: object
+      properties:
+        success: { type: boolean }
+        analysis:
+          type: object
+          properties:
+            threatDetected: { type: boolean }
+            severity: { type: string }
+            riskScore: { type: number }
+            explanation: { type: string }
+            model: { type: string }
+        incidentId: { type: string }
+
+    SecurityConfigureRequest:
+      type: object
+      required: [enabled, superAdminToken]
+      properties:
+        enabled: { type: boolean }
+        superAdminToken: { type: string }
+
+    SecurityStatusRequest:
+      type: object
+      required: [superAdminToken]
+      properties:
+        superAdminToken: { type: string }
+

@@ -1,0 +1,29 @@
+openapi: 3.0.3
+info:
+  title: AGRI-NEST Auth API
+  version: 0.1.0
+paths:
+  /auth/register:
+    post:
+      summary: Register a new user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '../openapi.yaml#/components/schemas/UserCreate'
+      responses:
+        '201':
+          description: Created
+
+  /auth/login:
+    post:
+      summary: Login
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '../openapi.yaml#/components/schemas/AuthRequest'
+      responses:
+        '200':
+          description: OK

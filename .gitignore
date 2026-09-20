@@ -1,0 +1,12 @@
+node_modules/
+dist/
+www/
+.env
+.env.*
+*.log
+npm-debug.log*
+.DS_Store
+coverage/
+.vite/
+.cache/
+.gitkeep

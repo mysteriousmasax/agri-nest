@@ -1,0 +1,6 @@
+{
+  "appId": "com.agri.nest",
+  "appName": "AGRI-NEST",
+  "webDir": "www",
+  "bundledWebRuntime": false
+}
